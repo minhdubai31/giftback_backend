@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: Giftback
+  datasource:
+    url: jdbc:postgresql://localhost:5432/giftback
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+oauth2:
+  google:
+    client-id: <your-client-id>
+    client-secret: <your-client-secret>
+    scope:
+      - email
+      - profile
+jwt:
+  secret: thisissecretkey
