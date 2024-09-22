@@ -17,6 +17,11 @@ public class UserService {
    private UserRepository userRepository;
    private Mapper<User, UserDto> userMapper;
 
+   public Optional<UserDto> findById(Integer userId) {
+      User foundedUser = userRepository.findById(userId).orElse(null);
+      return foundedUser != null ? Optional.of(userMapper.mapTo(foundedUser)) : Optional.empty();
+   }
+
    public Optional<UserDto> findByUsername(String username) {
       User foundedUser = userRepository.findByUsername(username);
       return foundedUser != null ? Optional.of(userMapper.mapTo(foundedUser)) : Optional.empty();
@@ -24,5 +29,13 @@ public class UserService {
 
    public void create(User user) {
       userRepository.save(user);
+   }
+
+   public void update(User user) {
+      userRepository.save(user);
+   }
+
+   public void deleteById(Integer userId) {
+      userRepository.deleteById(userId);
    }
 }

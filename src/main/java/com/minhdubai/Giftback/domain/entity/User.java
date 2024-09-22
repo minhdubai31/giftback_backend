@@ -3,6 +3,7 @@ package com.minhdubai.Giftback.domain.entity;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,6 +20,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
@@ -58,6 +60,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private AuthProvider authProvider = AuthProvider.LOCAL;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Notification> notifications;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
