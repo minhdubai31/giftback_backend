@@ -22,6 +22,9 @@ public class UserDto {
    private String username;
    private String name;
    private Role role;
+   
+   @Builder.Default
+   private Integer balance = 0;
    private AuthProvider authProvider;
    
    @JsonManagedReference

@@ -64,6 +64,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Notification> notifications;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Wallet> wallets;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

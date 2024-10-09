@@ -1,5 +1,7 @@
 package com.minhdubai.Giftback.service;
 
+import java.util.List;
+import java.util.Collections;
 import org.springframework.stereotype.Service;
 
 import com.minhdubai.Giftback.domain.entity.Notification;
@@ -40,6 +42,16 @@ public class NotificationService {
       } catch (Exception e) {
          System.out.println(e.getMessage());
          return false;
+      }
+   }
+
+   public List<Notification> getNotificationsByUserId(Integer userId) {
+      try {
+         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+         return notificationRepository.findByUser(user);
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+         return Collections.emptyList();
       }
    }
 }

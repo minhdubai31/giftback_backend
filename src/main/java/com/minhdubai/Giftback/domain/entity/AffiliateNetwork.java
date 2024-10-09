@@ -1,6 +1,8 @@
 package com.minhdubai.Giftback.domain.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -15,8 +17,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "blacklist_tokens")
-public class BlacklistToken {
-   @Id
-   private String token;
+@Table(name = "affiliate_networks")
+public class AffiliateNetwork {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String name;
+    private String url;
+    private String authorizeToken;
 }

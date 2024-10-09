@@ -18,7 +18,9 @@ import lombok.NoArgsConstructor;
 public class NotificationDto {
    private Integer id;
    private String message;
-   private Boolean is_read;
+
+   @Builder.Default
+   private Boolean is_read = false;
 
    @JsonBackReference
    @EqualsAndHashCode.Exclude
