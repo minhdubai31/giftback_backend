@@ -3,7 +3,7 @@ package com.minhdubai.Giftback.mapper.implement;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.minhdubai.Giftback.domain.dto.user.UserDto;
+import com.minhdubai.Giftback.domain.dto.UserDto;
 import com.minhdubai.Giftback.domain.entity.User;
 import com.minhdubai.Giftback.mapper.Mapper;
 

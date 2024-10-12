@@ -3,7 +3,7 @@ package com.minhdubai.Giftback.mapper.implement;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.minhdubai.Giftback.domain.dto.notification.NotificationDto;
+import com.minhdubai.Giftback.domain.dto.NotificationDto;
 import com.minhdubai.Giftback.domain.entity.Notification;
 import com.minhdubai.Giftback.mapper.Mapper;
 

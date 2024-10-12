@@ -1,4 +1,4 @@
-package com.minhdubai.Giftback.domain.dto.user;
+package com.minhdubai.Giftback.domain.dto;
 
 import java.util.Set;
 import java.security.AuthProvider;
@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.minhdubai.Giftback.domain.constant.Role;
-import com.minhdubai.Giftback.domain.dto.notification.NotificationDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

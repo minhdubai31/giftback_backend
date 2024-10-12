@@ -23,6 +23,7 @@ import lombok.Setter;
 public class ApiMap {
    private Integer id;
 
+   @OneToOne(mappedBy = "apiMap")
    private AffiliateNetwork affiliateNetwork;
    private String getCampaignApi;
    private String getProductApi;

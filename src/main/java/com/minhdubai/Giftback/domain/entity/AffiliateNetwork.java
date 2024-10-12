@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,4 +28,8 @@ public class AffiliateNetwork {
     private String name;
     private String url;
     private String authorizeToken;
+
+    @OneToOne
+    @JoinColumn(name = "apiMap_id")
+    private ApiMap apiMap;
 }

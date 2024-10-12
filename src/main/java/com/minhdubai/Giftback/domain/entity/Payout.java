@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.minhdubai.Giftback.domain.constant.PayoutMethod;
+import com.minhdubai.Giftback.domain.constant.PayoutStatus;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,7 +26,7 @@ public class Payout {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -42,14 +45,4 @@ public class Payout {
     private LocalDateTime requestedAt;
 
     private LocalDateTime completedAt;
-
-    public enum PayoutMethod {
-        BANK_TRANSFER
-    }
-
-    public enum PayoutStatus {
-        PENDING,
-        COMPLETED,
-        FAILED
-    }
 }

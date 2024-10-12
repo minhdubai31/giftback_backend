@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.minhdubai.Giftback.domain.dto.user.UserDto;
+import com.minhdubai.Giftback.domain.dto.UserDto;
 import com.minhdubai.Giftback.domain.entity.User;
 import com.minhdubai.Giftback.mapper.Mapper;
 import com.minhdubai.Giftback.repository.UserRepository;

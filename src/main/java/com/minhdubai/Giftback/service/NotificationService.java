@@ -21,10 +21,10 @@ public class NotificationService {
       try {
          User user = userRepository.findById(userId).get();
          Notification notification = Notification.builder()
-            .message(message)
-            .user(user)
-            .build();
-         
+               .message(message)
+               .user(user)
+               .build();
+
          notificationRepository.save(notification);
          return true;
       } catch (Exception e) {

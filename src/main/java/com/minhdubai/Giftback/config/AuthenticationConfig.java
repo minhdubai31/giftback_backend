@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.minhdubai.Giftback.domain.dto.user.UserDto;
+import com.minhdubai.Giftback.domain.dto.UserDto;
 import com.minhdubai.Giftback.domain.entity.User;
 import com.minhdubai.Giftback.mapper.Mapper;
 import com.minhdubai.Giftback.service.UserService;

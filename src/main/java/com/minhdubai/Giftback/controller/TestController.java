@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.minhdubai.Giftback.domain.dto.user.UserDto;
+import com.minhdubai.Giftback.domain.dto.UserDto;
 import com.minhdubai.Giftback.service.NotificationService;
 import com.minhdubai.Giftback.service.UserService;
 

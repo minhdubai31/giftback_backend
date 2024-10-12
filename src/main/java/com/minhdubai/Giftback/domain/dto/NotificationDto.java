@@ -1,9 +1,8 @@
-package com.minhdubai.Giftback.domain.dto.notification;
+package com.minhdubai.Giftback.domain.dto;
 
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.minhdubai.Giftback.domain.dto.user.UserDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.minhdubai.Giftback.domain.entity;
+package com.minhdubai.Giftback.domain.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,20 +21,14 @@ import lombok.Setter;
 @Entity
 @Builder
 @Table(name = "affiliate_programs")
-public class AffiliateProgram {
-   
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AffiliateProgramDto {
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
+    private BrandDto brand;
 
     private String programName;
     private BigDecimal commissionRate;
 
-    @Column(columnDefinition = "TEXT")
     private String terms;
 
     private String programUrl;
