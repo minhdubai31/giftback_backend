@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import com.minhdubai.Giftback.domain.constant.PayoutMethod;
 import com.minhdubai.Giftback.domain.constant.PayoutStatus;
 
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

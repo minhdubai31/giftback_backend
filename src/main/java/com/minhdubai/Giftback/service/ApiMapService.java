@@ -1,41 +1,65 @@
 package com.minhdubai.Giftback.service;
 
+import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
 import com.minhdubai.Giftback.domain.entity.ApiMap;
-import com.minhdubai.Giftback.dto.ApiMapDTO;
+import com.minhdubai.Giftback.mapper.Mapper;
+import com.minhdubai.Giftback.domain.dto.ApiMapDto;
 import com.minhdubai.Giftback.repository.ApiMapRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ApiMapService {
-   @Autowired
    private ApiMapRepository apiMapRepository;
+   private Mapper<ApiMap, ApiMapDto> apiMapMapper;
 
-   public ApiMap createApiMap(ApiMapDTO apiMapDTO) {
+   public ResponseDto createApiMap(ApiMapDto apiMapDto) {
       ApiMap apiMap = ApiMap.builder()
-            .getCampaignApi(apiMapDTO.getGetCampaignApi())
-            .getProductApi(apiMapDTO.getGetProductApi())
-            .getTransactionApi(apiMapDTO.getGetTransactionApi())
+            .getCampaignApi(apiMapDto.getGetCampaignApi())
+            .getProductApi(apiMapDto.getGetProductApi())
+            .getTransactionApi(apiMapDto.getGetTransactionApi())
             .build();
-      return apiMapRepository.save(apiMap);
+      ApiMap savedApiMap = apiMapRepository.save(apiMap);
+      return ResponseDto.builder()
+            .status(201)
+            .message("API Map created successfully")
+            .data(savedApiMap)
+            .build();
    }
 
-   public List<ApiMap> getAllApiMaps() {
-      return apiMapRepository.findAll();
+   public ResponseDto getAllApiMaps() {
+      List<ApiMapDto> apiMapDtos = apiMapRepository.findAll().stream()
+            .map(apiMap -> apiMapMapper.mapTo(apiMap))
+            .toList();
+      return ResponseDto.builder()
+            .status(200)
+            .message("API Maps retrieved successfully")
+            .data(apiMapDtos)
+            .build();
    }
 
-   public ApiMap getApiMapById(Integer id) {
-      return apiMapRepository.findById(id).orElse(null);
-   }
-
-   public ApiMap updateApiMap(Integer id, ApiMapDTO apiMapDTO) {
+   public ResponseDto getApiMapById(Integer id) {
       ApiMap apiMap = apiMapRepository.findById(id).orElse(null);
       if (apiMap != null) {
-         apiMap.setGetCampaignApi(apiMapDTO.getGetCampaignApi());
-         apiMap.setGetProductApi(apiMapDTO.getGetProductApi());
-         apiMap.setGetTransactionApi(apiMapDTO.getGetTransactionApi());
+         return ResponseDto.builder()
+               .status(200)
+               .message("API Map found")
+               .data(apiMap)
+               .build();
+      }
+      return ResponseDto.builder()
+            .status(404)
+            .message("API Map not found")
+            .build();
+   }
+
+   public ApiMap updateApiMap(Integer id, ApiMapDto apiMapDto) {
+      ApiMap apiMap = apiMapRepository.findById(id).orElse(null);
+      if (apiMap != null) {
+         apiMap.setGetCampaignApi(apiMapDto.getGetCampaignApi());
+         apiMap.setGetProductApi(apiMapDto.getGetProductApi());
+         apiMap.setGetTransactionApi(apiMapDto.getGetTransactionApi());
          return apiMapRepository.save(apiMap);
       }
       return null;

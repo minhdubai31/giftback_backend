@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Collections;
 import org.springframework.stereotype.Service;
 
+import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
 import com.minhdubai.Giftback.domain.entity.Notification;
 import com.minhdubai.Giftback.domain.entity.User;
 import com.minhdubai.Giftback.repository.NotificationRepository;
@@ -45,13 +46,22 @@ public class NotificationService {
       }
    }
 
-   public List<Notification> getNotificationsByUserId(Integer userId) {
+   public ResponseDto getNotificationsByUserId(Integer userId) {
       try {
          User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-         return notificationRepository.findByUser(user);
+         List<Notification> notifications = notificationRepository.findByUser(user);
+         return ResponseDto.builder()
+               .status(200)
+               .message("Notifications retrieved successfully")
+               .data(notifications)
+               .build();
       } catch (Exception e) {
          System.out.println(e.getMessage());
-         return Collections.emptyList();
+         return ResponseDto.builder()
+               .status(500)
+               .message("An error occurred while retrieving notifications")
+               .data(Collections.emptyList())
+               .build();
       }
    }
 }

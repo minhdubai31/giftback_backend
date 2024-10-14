@@ -21,6 +21,8 @@ import lombok.Setter;
 @Builder
 @Table(name = "affiliate_programs")
 public class ApiMap {
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Integer id;
 
    @OneToOne(mappedBy = "apiMap")
