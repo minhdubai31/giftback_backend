@@ -4,17 +4,19 @@ import com.minhdubai.Giftback.domain.entity.Brand;
 import com.minhdubai.Giftback.mapper.Mapper;
 import com.minhdubai.Giftback.domain.dto.BrandDto;
 import com.minhdubai.Giftback.repository.BrandRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BrandService {
-   @Autowired
-   private BrandRepository brandRepository;
-   private Mapper<Brand, BrandDto> brandMapper;
+   private final BrandRepository brandRepository;
+   private final Mapper<Brand, BrandDto> brandMapper;
 
    public ResponseDto createBrand(BrandDto brandDto) {
       Brand brand = Brand.builder()

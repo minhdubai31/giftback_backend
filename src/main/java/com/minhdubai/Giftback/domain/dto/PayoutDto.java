@@ -3,6 +3,9 @@ package com.minhdubai.Giftback.domain.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.minhdubai.Giftback.domain.constant.PayoutMethod;
 import com.minhdubai.Giftback.domain.constant.PayoutStatus;
 
@@ -23,4 +26,10 @@ public class PayoutDto {
     private PayoutStatus status;
     private LocalDateTime requestedAt;
     private LocalDateTime completedAt;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

@@ -1,4 +1,5 @@
 package com.minhdubai.Giftback.domain.entity;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,8 +9,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Getter
 @Setter
@@ -17,20 +19,23 @@ import org.hibernate.annotations.UpdateTimestamp;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "wallets")
-public class Wallet {
-
+@Table(name = "groups")
+public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(precision = 10, scale = 2)
-    @Builder.Default
-    private BigDecimal balance = BigDecimal.ZERO;
+    private String name;
 
-    @UpdateTimestamp
-    private LocalDateTime lastUpdated;
+    private BigDecimal walletBalance;
 
-    @OneToOne(mappedBy = "wallet", cascade = CascadeType.ALL)
-    private User user;
+    @OneToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+    @OneToMany(mappedBy = "group")
+    private Set<User> users;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }

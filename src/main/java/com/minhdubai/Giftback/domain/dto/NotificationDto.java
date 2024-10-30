@@ -2,6 +2,9 @@ package com.minhdubai.Giftback.domain.dto;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +27,10 @@ public class NotificationDto {
    @JsonBackReference
    @EqualsAndHashCode.Exclude
    private UserDto user;
+   
+   @CreationTimestamp
    private LocalDateTime createdAt;
-   private LocalDateTime updatedAt; 
+   
+   @UpdateTimestamp
+   private LocalDateTime updatedAt;
 }

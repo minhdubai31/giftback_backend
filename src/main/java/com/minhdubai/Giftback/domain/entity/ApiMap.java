@@ -19,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "affiliate_programs")
+@Table(name = "api_map")
 public class ApiMap {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

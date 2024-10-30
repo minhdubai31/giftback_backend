@@ -1,5 +1,10 @@
 package com.minhdubai.Giftback.domain.dto;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
@@ -19,4 +24,10 @@ public class AffiliateNetworkDto {
 
     @JsonManagedReference
     private ApiMapDto apiMap;
+    
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

@@ -1,29 +1,34 @@
 package com.minhdubai.Giftback.domain.dto;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Set;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WalletDto {
+public class GroupDto {
     private Integer id;
-    private BigDecimal balance;
-    private LocalDateTime lastUpdated;
+    private String name;
 
-    @JsonBackReference
-    private UserDto user;
+    private BigDecimal walletBalance;
+
+    @JsonManagedReference
+    private UserDto owner;
+
+    @JsonManagedReference
+    private Set<UserDto> users;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

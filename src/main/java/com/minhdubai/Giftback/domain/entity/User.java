@@ -14,13 +14,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.minhdubai.Giftback.domain.constant.AuthProvider;
 import com.minhdubai.Giftback.domain.constant.Role;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
@@ -64,8 +68,13 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Notification> notifications;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Wallet> wallets;
+    @OneToOne
+    @JoinColumn(name = "wallet_id", updatable = false)
+    private Wallet wallet;
+
+    @ManyToOne()
+    @JoinColumn(name = "group_id")
+    private Group group;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
