@@ -33,13 +33,14 @@ public class Notification {
    private String message;
 
    @Builder.Default
-   private Boolean is_read = false;
+   private Boolean isRead = false;
 
    @ManyToOne
    @JoinColumn(name = "user_id")
    private User user;
+
+   private Integer messageGroup;
    
-   @CreationTimestamp
    private LocalDateTime createdAt;
 
    @UpdateTimestamp

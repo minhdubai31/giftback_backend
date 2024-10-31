@@ -27,7 +27,8 @@ public class Group {
 
     private String name;
 
-    private BigDecimal walletBalance;
+    @Builder.Default
+    private BigDecimal walletBalance = BigDecimal.ZERO;
 
     @OneToOne
     @JoinColumn(name = "owner_id")

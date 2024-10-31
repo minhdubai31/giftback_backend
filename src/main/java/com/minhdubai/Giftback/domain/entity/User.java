@@ -68,7 +68,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Notification> notifications;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "wallet_id", updatable = false)
     private Wallet wallet;
 

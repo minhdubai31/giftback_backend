@@ -22,7 +22,8 @@ public class GroupDto {
     private Integer id;
     private String name;
 
-    private BigDecimal walletBalance;
+    @Builder.Default
+    private BigDecimal walletBalance = BigDecimal.ZERO;
 
     @JsonManagedReference
     private UserDto owner;

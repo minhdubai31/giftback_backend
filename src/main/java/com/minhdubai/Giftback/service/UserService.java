@@ -15,6 +15,7 @@ import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
 
 import lombok.AllArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +49,6 @@ public class UserService {
    }
 
    public ResponseDto create(UserDto userDto) {
-      userDto.setRole(Role.USER);
       User user = userMapper.mapFrom(userDto);
       // Check if the group is not null and is transient
       if (user.getGroup() != null && user.getGroup().getId() == null) {
@@ -59,6 +59,10 @@ public class UserService {
       if (user.getWallet() != null && user.getWallet().getId() == null) {
          // Save the wallet first if it's a new transient instance
          user.setWallet(walletRepository.save(user.getWallet()));
+      } else {
+         user.setWallet(walletRepository.save(
+            Wallet.builder().balance(BigDecimal.ZERO).build()
+         ));
       }
 
       // Save the user first to ensure the wallet can reference it
@@ -92,11 +96,18 @@ public class UserService {
    }
 
    public ResponseDto deleteById(Integer userId) {
-      userRepository.deleteById(userId);
-      return ResponseDto.builder()
-            .status(200)
-            .message("User deleted successfully")
-            .build();
+      if (userRepository.existsById(userId)) {
+         userRepository.deleteById(userId);
+         return ResponseDto.builder()
+               .status(200)
+               .message("User deleted successfully")
+               .build();
+      } else {
+         return ResponseDto.builder()
+               .status(404)
+               .message("User not found")
+               .build();
+      }
    }
 
    public ResponseDto getAllUsers() {

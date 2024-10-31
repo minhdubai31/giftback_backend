@@ -22,7 +22,7 @@ public class NotificationDto {
    private String message;
 
    @Builder.Default
-   private Boolean is_read = false;
+   private Boolean isRead = false;
 
    @JsonBackReference
    @EqualsAndHashCode.Exclude

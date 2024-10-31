@@ -16,7 +16,7 @@ public class NotificationController {
 
     @PostMapping("/user/{userId}")
     public ResponseEntity<Boolean> addNotificationToUser(@PathVariable Integer userId, @RequestBody String message) {
-        boolean result = notificationService.addNotificaitonToUser(userId, message);
+        boolean result = notificationService.addNotificationToUser(userId, message);
         return ResponseEntity.ok(result);
     }
 
@@ -30,5 +30,17 @@ public class NotificationController {
     public ResponseEntity<ResponseDto> getNotificationsByUserId(@PathVariable Integer userId) {
         ResponseDto notifications = notificationService.getNotificationsByUserId(userId);
         return ResponseEntity.ok(notifications);
+    }
+
+    @GetMapping("/grouped")
+    public ResponseEntity<ResponseDto> getAllNotificationsGroupedByMessageGroup() {
+        ResponseDto response = notificationService.getAllNotificationsGroupedByMessageGroup();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/sendToAll")
+    public ResponseEntity<ResponseDto> sendNotificationToAllUsers(@RequestBody String message) {
+        ResponseDto response = notificationService.sendNotificationToAllUsers(message);
+        return ResponseEntity.ok(response);
     }
 }
