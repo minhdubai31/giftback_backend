@@ -25,6 +25,8 @@ public class ApiMapDto {
     private String getCampaignApi;
     private String getProductApi;
     private String getTransactionApi;
+   private String getCampaignCommissionApi;
+
 
    @CreationTimestamp
    private LocalDateTime createdAt;

@@ -44,4 +44,10 @@ public class AffiliateProgramController {
         affiliateProgramService.deleteAffiliateProgram(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/load-from-network")
+    public ResponseEntity<ResponseDto> loadFromNetwork() {
+        ResponseDto response = affiliateProgramService.loadFromNetwork();
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }

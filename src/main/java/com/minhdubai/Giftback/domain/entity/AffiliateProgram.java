@@ -26,16 +26,24 @@ public class AffiliateProgram {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String campaignId;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
     private String programName;
-    private BigDecimal commissionRate;
+    @Column(columnDefinition = "TEXT")
+    private String commissionRate;
 
     @Column(columnDefinition = "TEXT")
     private String terms;
+
+    private String logo;
+
+    @ManyToOne
+    @JoinColumn(name = "network_id")
+    private AffiliateNetwork affiliateNetwork;
 
     private String programUrl;
 

@@ -4,6 +4,7 @@ import com.minhdubai.Giftback.domain.entity.AffiliateNetwork;
 import com.minhdubai.Giftback.domain.entity.ApiMap;
 import com.minhdubai.Giftback.mapper.Mapper;
 import com.minhdubai.Giftback.domain.dto.AffiliateNetworkDto;
+import com.minhdubai.Giftback.domain.dto.ApiMapDto;
 import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
 import com.minhdubai.Giftback.repository.AffiliateNetworkRepository;
 import com.minhdubai.Giftback.repository.ApiMapRepository;
@@ -20,6 +21,7 @@ public class AffiliateNetworkService {
    private final AffiliateNetworkRepository affiliateNetworkRepository;
    private final ApiMapRepository apiMapRepository;
    private final Mapper<AffiliateNetwork, AffiliateNetworkDto> networkMapper;
+   private final Mapper<ApiMap, ApiMapDto> apiMapper;
 
    public ResponseDto createAffiliateNetwork(AffiliateNetworkDto affiliateNetworkDto) {
       AffiliateNetwork affiliateNetwork = networkMapper.mapFrom(affiliateNetworkDto);
@@ -30,6 +32,7 @@ public class AffiliateNetworkService {
                .getCampaignApi(apiMapDto.getGetCampaignApi())
                .getProductApi(apiMapDto.getGetProductApi())
                .getTransactionApi(apiMapDto.getGetTransactionApi())
+               .getCampaignCommissionApi(apiMapDto.getGetCampaignCommissionApi())
                .build();
          ApiMap savedApiMap = apiMapRepository.save(apiMap);
          affiliateNetwork.setApiMap(savedApiMap);
@@ -78,6 +81,7 @@ public class AffiliateNetworkService {
          existingNetwork.setName(affiliateNetworkDto.getName());
          existingNetwork.setUrl(affiliateNetworkDto.getUrl());
          existingNetwork.setAuthorizeToken(affiliateNetworkDto.getAuthorizeToken());
+         existingNetwork.setApiMap(apiMapRepository.save(apiMapper.mapFrom(affiliateNetworkDto.getApiMap())));
          AffiliateNetwork savedNetwork = affiliateNetworkRepository.save(existingNetwork);
          return ResponseDto.builder()
                .status(200)

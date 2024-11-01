@@ -7,6 +7,7 @@ import com.minhdubai.Giftback.domain.dto.AffiliateNetworkDto;
 import com.minhdubai.Giftback.domain.entity.AffiliateNetwork;
 import com.minhdubai.Giftback.mapper.Mapper;
 
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 
 @Component
@@ -14,6 +15,12 @@ import lombok.AllArgsConstructor;
 public class AffiliateNetworkMapper implements Mapper<AffiliateNetwork, AffiliateNetworkDto> {
 
    private final ModelMapper modelMapper;
+
+   @PostConstruct
+    public void setupMapper() {
+        modelMapper.typeMap(AffiliateNetwork.class, AffiliateNetworkDto.class)
+                .addMappings(mapper -> mapper.skip(AffiliateNetworkDto::setAffiliatePrograms));
+    }
 
    @Override
    public AffiliateNetworkDto mapTo(AffiliateNetwork affiliateNetwork) {
