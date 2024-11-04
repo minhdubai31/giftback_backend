@@ -21,8 +21,6 @@ public class AffiliateProgramDto {
     private Integer id;
     private String campaignId;
 
-    private BrandDto brand;
-
     private String programName;
     private String commissionRate;
 

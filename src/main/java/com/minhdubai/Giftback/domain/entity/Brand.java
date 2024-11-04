@@ -31,9 +31,6 @@ public class Brand {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "brand")
-    Set<AffiliateProgram> affiliatePrograms;
-
     private String logoPath;
 
     @CreationTimestamp

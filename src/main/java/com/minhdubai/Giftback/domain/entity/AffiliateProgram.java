@@ -28,10 +28,6 @@ public class AffiliateProgram {
     private Integer id;
     private String campaignId;
 
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
-
     private String programName;
     @Column(columnDefinition = "TEXT")
     private String commissionRate;

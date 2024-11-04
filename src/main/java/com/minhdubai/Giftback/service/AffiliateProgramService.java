@@ -136,15 +136,6 @@ public class AffiliateProgramService {
                 List<Map<String, Object>> data = (List<Map<String, Object>>) response.getBody().get("data");
                 List<AffiliateProgramDto> createdPrograms = data.stream()
                         .map(campaignData -> {
-                            String merchantName = (String) campaignData.get("merchant");
-                            Brand brand = brandRepository.findByName(merchantName)
-                                    .orElseGet(() -> {
-                                        Brand newBrand = Brand.builder()
-                                                .name(merchantName)
-                                                .build();
-                                        return brandRepository.save(newBrand);
-                                    });
-
                             String commissionRate = ((String) ((Map<String, Object>) campaignData.get("description"))
                                     .get("commission_policy"))
                                     .trim();
@@ -159,7 +150,6 @@ public class AffiliateProgramService {
                                     .programUrl((String) campaignData.get("url"))
                                     .logo((String) campaignData.get("logo"))
                                     .campaignId((String) campaignData.get("id"))
-                                    .brand(brandMapper.mapTo(brand))
                                     .affiliateNetwork(networkMapper.mapTo(network))
                                     .commissionRate(commissionRate)
                                     .build();
