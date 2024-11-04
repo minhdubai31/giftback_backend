@@ -42,4 +42,14 @@ public class Transaction {
     @CreationTimestamp
     private LocalDateTime transactionDate;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer status = 0; // 0: Pending, 1: Approved, 2: Rejected
+
+    private String productImage;
+
+    private String productName;
+
+    private String reasonReject;
+
 }

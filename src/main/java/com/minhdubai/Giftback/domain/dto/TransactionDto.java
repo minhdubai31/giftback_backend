@@ -22,6 +22,14 @@ public class TransactionDto {
     private BigDecimal totalAmount;
     private BigDecimal cashbackAmount;
     private LocalDateTime transactionDate;
+    @Builder.Default
+    private Integer status = 0; // 0: Pending, 1: Approved, 2: Rejected
+
+    private String productImage;
+
+    private String productName;
+
+    private String reasonReject;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

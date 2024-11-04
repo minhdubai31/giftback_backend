@@ -104,7 +104,15 @@ public class AffiliateProgramService {
     }
 
     public ResponseDto loadFromNetwork() {
-        AffiliateNetwork network = affiliateNetworkRepository.findAll().getFirst();
+        List<AffiliateNetwork> networks = affiliateNetworkRepository.findAll();
+        if (networks.size() == 0) {
+            return ResponseDto.builder()
+                    .status(500)
+                    .message("No affiliate network has been set")
+                    .build();
+        }
+
+        AffiliateNetwork network = networks.getFirst();
         RestTemplate restTemplate = new RestTemplate();
 
         String url = network.getApiMap().getGetCampaignApi();
@@ -137,14 +145,17 @@ public class AffiliateProgramService {
                                         return brandRepository.save(newBrand);
                                     });
 
-                            
-                            String commissionRate = ((String) ((Map<String, Object>)campaignData.get("description")).get("commission_policy"))
+                            String commissionRate = ((String) ((Map<String, Object>) campaignData.get("description"))
+                                    .get("commission_policy"))
                                     .trim();
-                            System.out.println("Commission Rate: " + commissionRate);
-                            
+
+                            String terms = ((String) ((Map<String, Object>) campaignData.get("description"))
+                                    .get("introduction"))
+                                    .trim();
+
                             AffiliateProgramDto dto = AffiliateProgramDto.builder()
                                     .programName((String) campaignData.get("name"))
-                                    .terms((String) campaignData.get("cookie_policy"))
+                                    .terms(terms)
                                     .programUrl((String) campaignData.get("url"))
                                     .logo((String) campaignData.get("logo"))
                                     .campaignId((String) campaignData.get("id"))
@@ -168,7 +179,7 @@ public class AffiliateProgramService {
                                     .orElse(null);
                             if (existingProgram == null) {
                                 existingProgram = affiliateProgramRepository.save(programMapper.mapFrom(dto));
-                            } 
+                            }
 
                             return dto;
                         })
