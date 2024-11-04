@@ -38,8 +38,10 @@ public class UserDto {
    @JsonManagedReference
    private Set<NotificationDto> notifications;
 
-   @JsonManagedReference
    private WalletDto wallet;
+
+   private String bankName;
+   private String bankAccountNumber;
    
    @CreationTimestamp
    private LocalDateTime createdAt;

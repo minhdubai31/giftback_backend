@@ -30,7 +30,6 @@ public class AffiliateNetworkService {
          var apiMapDto = affiliateNetworkDto.getApiMap();
          ApiMap apiMap = ApiMap.builder()
                .getCampaignApi(apiMapDto.getGetCampaignApi())
-               .getProductApi(apiMapDto.getGetProductApi())
                .getTransactionApi(apiMapDto.getGetTransactionApi())
                .getCampaignCommissionApi(apiMapDto.getGetCampaignCommissionApi())
                .build();

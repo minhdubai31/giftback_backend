@@ -22,7 +22,6 @@ public class PayoutDto {
     private Integer id;
     private UserDto user;
     private BigDecimal amount;
-    private PayoutMethod method;
     private PayoutStatus status;
     private LocalDateTime requestedAt;
     private LocalDateTime completedAt;

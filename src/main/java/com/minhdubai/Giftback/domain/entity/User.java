@@ -72,6 +72,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "wallet_id", updatable = false)
     private Wallet wallet;
 
+    private String bankName;
+    private String bankAccountNumber;
+
     @ManyToOne()
     @JoinColumn(name = "group_id")
     private Group group;

@@ -44,4 +44,10 @@ public class TransactionController {
         transactionService.deleteTransaction(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/update-from-network")
+    public ResponseEntity<ResponseDto> updateTransactionFromNetwork() {
+        ResponseDto response = transactionService.updateTransactionFromNetwork();
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }

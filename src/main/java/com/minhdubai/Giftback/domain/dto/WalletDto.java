@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +23,7 @@ public class WalletDto {
     private BigDecimal balance;
     private LocalDateTime lastUpdated;
 
-    @JsonBackReference
+    @JsonIgnore
     private UserDto user;
 
     @CreationTimestamp

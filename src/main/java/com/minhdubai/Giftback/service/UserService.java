@@ -81,6 +81,8 @@ public class UserService {
          existingUser.setUsername(userDto.getUsername());
          existingUser.setName(userDto.getName());
          existingUser.setRole(userDto.getRole());
+         existingUser.setBankName(userDto.getBankName());
+         existingUser.setBankAccountNumber(userDto.getBankAccountNumber());
          existingUser.setWallet(walletMapper.mapFrom(userDto.getWallet()));
          User updatedUser = userRepository.save(existingUser);
          return ResponseDto.builder()

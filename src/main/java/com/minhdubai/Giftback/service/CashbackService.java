@@ -1,23 +1,31 @@
 package com.minhdubai.Giftback.service;
 
 import com.minhdubai.Giftback.domain.dto.CashbackDto;
+import com.minhdubai.Giftback.domain.dto.TransactionDto;
 import com.minhdubai.Giftback.domain.entity.Cashback;
+import com.minhdubai.Giftback.domain.entity.Transaction;
 import com.minhdubai.Giftback.mapper.Mapper;
 import com.minhdubai.Giftback.repository.CashbackRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CashbackService {
-   private CashbackRepository cashbackRepository;
-   private Mapper<Cashback, CashbackDto> cashbackMapper;
+   private final CashbackRepository cashbackRepository;
+   private final Mapper<Cashback, CashbackDto> cashbackMapper;
+   private final Mapper<Transaction, TransactionDto> transactionMapper;
 
    public ResponseDto createCashback(CashbackDto cashbackDto) {
       Cashback cashback = Cashback.builder()
               .amount(cashbackDto.getAmount())
               .earnedAt(cashbackDto.getEarnedAt())
+              .transaction(transactionMapper.mapFrom(cashbackDto.getTransaction()))
               .build();
       Cashback savedCashback = cashbackRepository.save(cashback);
       CashbackDto savedCashbackDto = cashbackMapper.mapTo(savedCashback);

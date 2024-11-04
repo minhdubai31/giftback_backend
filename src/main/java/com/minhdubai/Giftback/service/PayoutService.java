@@ -3,20 +3,26 @@ package com.minhdubai.Giftback.service;
 import com.minhdubai.Giftback.domain.entity.Payout;
 import com.minhdubai.Giftback.domain.entity.User;
 import com.minhdubai.Giftback.mapper.Mapper;
+import com.minhdubai.Giftback.domain.constant.PayoutStatus;
 import com.minhdubai.Giftback.domain.dto.PayoutDto;
 import com.minhdubai.Giftback.repository.PayoutRepository;
 import com.minhdubai.Giftback.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
 
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class PayoutService {
-   private PayoutRepository payoutRepository;
-   private UserRepository userRepository;
-   private Mapper<Payout, PayoutDto> payoutMapper;
+   private final PayoutRepository payoutRepository;
+   private final UserRepository userRepository;
+   private final Mapper<Payout, PayoutDto> payoutMapper;
 
    public ResponseDto createPayout(PayoutDto payoutDto) {
       User user = userRepository.findById(payoutDto.getUser().getId())
@@ -24,8 +30,8 @@ public class PayoutService {
       Payout payout = Payout.builder()
             .user(user)
             .amount(payoutDto.getAmount())
-            .method(payoutDto.getMethod())
             .status(payoutDto.getStatus())
+            .requestedAt(payoutDto.getRequestedAt())
             .build();
       Payout savedPayout = payoutRepository.save(payout);
       PayoutDto savedPayoutDto = payoutMapper.mapTo(savedPayout);
@@ -69,7 +75,6 @@ public class PayoutService {
                .orElseThrow(() -> new RuntimeException("User not found with ID: " + payoutDto.getUser().getId()));
          payout.setUser(user);
          payout.setAmount(payoutDto.getAmount());
-         payout.setMethod(payoutDto.getMethod());
          payout.setStatus(payoutDto.getStatus());
          Payout updatedPayout = payoutRepository.save(payout);
          PayoutDto updatedPayoutDto = payoutMapper.mapTo(updatedPayout);
@@ -87,5 +92,14 @@ public class PayoutService {
 
    public void deletePayout(Integer id) {
       payoutRepository.deleteById(id);
+   }
+
+   public void updatePayoutStatus(Integer id, PayoutStatus status) {
+      Payout payout = payoutRepository.findById(id).orElse(null);
+      if (payout != null) {
+         payout.setStatus(status);
+         payout.setCompletedAt(LocalDateTime.now());
+         payoutRepository.save(payout);
+      }
    }
 }

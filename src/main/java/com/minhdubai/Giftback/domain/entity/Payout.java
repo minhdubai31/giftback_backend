@@ -36,9 +36,6 @@ public class Payout {
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
-    private PayoutMethod method;
-
-    @Enumerated(EnumType.STRING)
     private PayoutStatus status;
 
     @CreationTimestamp

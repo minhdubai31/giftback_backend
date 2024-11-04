@@ -21,16 +21,14 @@ public class ApiMapDto {
 
     @JsonBackReference
     private AffiliateNetworkDto affiliateNetwork;
-    
+
     private String getCampaignApi;
-    private String getProductApi;
     private String getTransactionApi;
-   private String getCampaignCommissionApi;
+    private String getCampaignCommissionApi;
 
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-   @CreationTimestamp
-   private LocalDateTime createdAt;
-   
-   @UpdateTimestamp
-   private LocalDateTime updatedAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

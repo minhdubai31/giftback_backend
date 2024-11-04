@@ -147,6 +147,5 @@ public class TransactionService {
                .message("An error occurred while fetching transactions: " + e.getMessage())
                .build();
       }
-
    }
 }

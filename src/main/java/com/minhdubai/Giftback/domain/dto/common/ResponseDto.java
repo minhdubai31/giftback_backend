@@ -8,5 +8,7 @@ import lombok.Data;
 public class ResponseDto {
    private Integer status;
    private String message;
-   private Object data;
+
+   @Builder.Default
+   private Object data = null;
 }

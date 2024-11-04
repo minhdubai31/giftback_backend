@@ -28,7 +28,6 @@ public class ApiMap {
    @OneToOne(mappedBy = "apiMap")
    private AffiliateNetwork affiliateNetwork;
    private String getCampaignApi;
-   private String getProductApi;
    private String getTransactionApi;
    private String getCampaignCommissionApi;
 

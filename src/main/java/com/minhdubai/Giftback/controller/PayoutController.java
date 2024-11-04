@@ -1,6 +1,7 @@
 package com.minhdubai.Giftback.controller;
 
 import com.minhdubai.Giftback.domain.dto.PayoutDto;
+import com.minhdubai.Giftback.domain.constant.PayoutStatus; // Import PayoutStatus
 import com.minhdubai.Giftback.service.PayoutService;
 import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +44,15 @@ public class PayoutController {
     public ResponseEntity<Void> deletePayout(@PathVariable Integer id) {
         payoutService.deletePayout(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/status")
+    public ResponseEntity<ResponseDto> updatePayoutStatus(@PathVariable Integer id, @RequestBody PayoutStatus status) {
+        payoutService.updatePayoutStatus(id, status);
+        ResponseDto response = ResponseDto.builder()
+                .status(200)
+                .message("Payout status updated successfully")
+                .build();
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

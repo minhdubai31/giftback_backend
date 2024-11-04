@@ -17,7 +17,6 @@ public class ApiMapService {
    public ResponseDto createApiMap(ApiMapDto apiMapDto) {
       ApiMap apiMap = ApiMap.builder()
             .getCampaignApi(apiMapDto.getGetCampaignApi())
-            .getProductApi(apiMapDto.getGetProductApi())
             .getTransactionApi(apiMapDto.getGetTransactionApi())
             .build();
       ApiMap savedApiMap = apiMapRepository.save(apiMap);
@@ -58,7 +57,6 @@ public class ApiMapService {
       ApiMap apiMap = apiMapRepository.findById(id).orElse(null);
       if (apiMap != null) {
          apiMap.setGetCampaignApi(apiMapDto.getGetCampaignApi());
-         apiMap.setGetProductApi(apiMapDto.getGetProductApi());
          apiMap.setGetTransactionApi(apiMapDto.getGetTransactionApi());
          return apiMapRepository.save(apiMap);
       }
