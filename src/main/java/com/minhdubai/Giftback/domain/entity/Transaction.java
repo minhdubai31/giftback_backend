@@ -24,6 +24,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String transactionId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

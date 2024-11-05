@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TransactionDto {
     private Integer id;
+    private String transactionId;
+
     private UserDto user;
     private AffiliateProgramDto program;
     private BigDecimal totalAmount;

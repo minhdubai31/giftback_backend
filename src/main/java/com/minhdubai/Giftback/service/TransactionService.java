@@ -118,14 +118,16 @@ public class TransactionService {
             List<Map<String, Object>> data = (List<Map<String, Object>>) response.getBody().get("data");
             for (Map<String, Object> transactionData : data) {
                // Map the response data to TransactionDto
-               TransactionDto transactionDto = new TransactionDto();
-               transactionDto.setProductName((String) transactionData.get("product_name"));
-               transactionDto.setProductImage((String) transactionData.get("product_image"));
-               transactionDto.setTotalAmount(BigDecimal.valueOf((Double) transactionData.get("transaction_value")));
-               transactionDto.setCashbackAmount(BigDecimal.valueOf((Double) transactionData.get("commission")));
-               transactionDto.setStatus((Integer) transactionData.get("status"));
-               transactionDto.setReasonReject((String) transactionData.get("reason_rejected"));
-               transactionDto.setTransactionDate(LocalDateTime.parse((String) transactionData.get("transaction_time")));
+               TransactionDto transactionDto = TransactionDto.builder()
+                   .productName((String) transactionData.get("product_name"))
+                   .productImage((String) transactionData.get("product_image"))
+                   .totalAmount(BigDecimal.valueOf((Double) transactionData.get("transaction_value")))
+                   .cashbackAmount(BigDecimal.valueOf((Double) transactionData.get("commission")))
+                   .status((Integer) transactionData.get("status"))
+                   .reasonReject((String) transactionData.get("reason_rejected"))
+                   .transactionDate(LocalDateTime.parse((String) transactionData.get("transaction_time")))
+                   .transactionId((String) transactionData.get("transaction_id"))
+                   .build();
 
                // Save the transaction to the database
                Transaction transaction = transactionMapper.mapFrom(transactionDto);

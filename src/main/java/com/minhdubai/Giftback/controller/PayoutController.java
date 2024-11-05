@@ -46,7 +46,7 @@ public class PayoutController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}/status")
+    @PutMapping("/{id}/status")
     public ResponseEntity<ResponseDto> updatePayoutStatus(@PathVariable Integer id, @RequestBody PayoutStatus status) {
         payoutService.updatePayoutStatus(id, status);
         ResponseDto response = ResponseDto.builder()

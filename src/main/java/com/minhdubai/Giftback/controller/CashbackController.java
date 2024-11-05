@@ -44,4 +44,10 @@ public class CashbackController {
         cashbackService.deleteCashback(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @GetMapping("/load-from-network")
+    public ResponseEntity<ResponseDto> updateCashbackFromNetwork() {
+        ResponseDto response = cashbackService.updateCashbackFromNetwork();
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }
