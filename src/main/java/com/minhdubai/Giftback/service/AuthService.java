@@ -62,7 +62,7 @@ public class AuthService {
                   ResponseDto response = ResponseDto.builder()
                               .status(200)
                               .message("Accepted")
-                              .data(Map.of("token", token))
+                              .data(Map.of("token", token, "userData", userMapper.mapTo(user)))
                               .build();
 
                   return response;
@@ -97,7 +97,7 @@ public class AuthService {
                         .build();
 
             JsonWebSignature signature = verifier.verify(idToken);
-
+            System.out.println(signature);
             var payload = signature.getPayload();
             String username = AuthProvider.GOOGLE.getPrefix() + (String) payload.get("email");
             User user = userRepository.findByUsername(username);
@@ -118,7 +118,7 @@ public class AuthService {
             ResponseDto response = ResponseDto.builder()
                         .status(200)
                         .message("Accepted")
-                        .data(Map.of("token", token))
+                        .data(Map.of("token", token, "userData", userMapper.mapTo(user)))
                         .build();
 
             return response;
