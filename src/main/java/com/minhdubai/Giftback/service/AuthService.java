@@ -12,10 +12,12 @@ import com.google.api.client.json.webtoken.JsonWebSignature;
 import com.google.auth.oauth2.TokenVerifier;
 import com.google.auth.oauth2.TokenVerifier.VerificationException;
 import com.minhdubai.Giftback.domain.constant.AuthProvider;
+import com.minhdubai.Giftback.domain.dto.GroupDto;
 import com.minhdubai.Giftback.domain.dto.UserDto;
 import com.minhdubai.Giftback.domain.dto.auth.RegisterDto;
 import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
 import com.minhdubai.Giftback.domain.entity.BlacklistToken;
+import com.minhdubai.Giftback.domain.entity.Group;
 import com.minhdubai.Giftback.domain.entity.User;
 import com.minhdubai.Giftback.mapper.Mapper;
 import com.minhdubai.Giftback.repository.BlacklistTokenRepository;
@@ -32,6 +34,7 @@ public class AuthService {
       private final JwtUtil jwtUtil;
       private final PasswordEncoder passwordEncoder;
       private final Mapper<User, UserDto> userMapper;
+      private final Mapper<Group, GroupDto> groupMapper;
 
       @Value("${oauth2.google.client-id}")
       private String googleClientId;
@@ -43,12 +46,18 @@ public class AuthService {
                         .password(passwordEncoder.encode(userInfo.getPassword()))
                         .build();
 
-            userRepository.save(newUser);
+            User savedUser = userRepository.save(newUser);
+            UserDto userDto = userMapper.mapTo(savedUser);
+            if (savedUser.getGroup() != null) {
+                  userDto.setGroup(groupMapper.mapTo(savedUser.getGroup()));
+            }
+
+            String token = jwtUtil.generateToken(savedUser.getUsername());
 
             ResponseDto response = ResponseDto.builder()
-                        .status(201)
-                        .message("User created successfully")
-                        .data(userMapper.mapTo(newUser))
+                        .status(200)
+                        .message("Accepted")
+                        .data(Map.of("token", token, "userData", userDto))
                         .build();
 
             return response;
@@ -58,11 +67,15 @@ public class AuthService {
             User user = userRepository.findByUsername(username);
             if (user != null && passwordEncoder.matches(password, user.getPassword())) {
                   String token = jwtUtil.generateToken(username);
+                  UserDto userDto = userMapper.mapTo(user);
+                  if (user.getGroup() != null) {
+                        userDto.setGroup(groupMapper.mapTo(user.getGroup()));
+                  }
 
                   ResponseDto response = ResponseDto.builder()
                               .status(200)
                               .message("Accepted")
-                              .data(Map.of("token", token, "userData", userMapper.mapTo(user)))
+                              .data(Map.of("token", token, "userData", userDto))
                               .build();
 
                   return response;
@@ -97,7 +110,6 @@ public class AuthService {
                         .build();
 
             JsonWebSignature signature = verifier.verify(idToken);
-            System.out.println(signature);
             var payload = signature.getPayload();
             String username = AuthProvider.GOOGLE.getPrefix() + (String) payload.get("email");
             User user = userRepository.findByUsername(username);
@@ -113,12 +125,17 @@ public class AuthService {
                   userRepository.save(user);
             }
 
+            UserDto userDto = userMapper.mapTo(user);
+            if (user.getGroup() != null) {
+                  userDto.setGroup(groupMapper.mapTo(user.getGroup()));
+            }
+
             String token = jwtUtil.generateToken(username);
 
             ResponseDto response = ResponseDto.builder()
                         .status(200)
                         .message("Accepted")
-                        .data(Map.of("token", token, "userData", userMapper.mapTo(user)))
+                        .data(Map.of("token", token, "userData", userDto))
                         .build();
 
             return response;

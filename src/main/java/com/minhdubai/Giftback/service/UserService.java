@@ -1,10 +1,13 @@
 package com.minhdubai.Giftback.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.minhdubai.Giftback.domain.constant.Role;
+import com.minhdubai.Giftback.domain.dto.GroupDto;
 import com.minhdubai.Giftback.domain.dto.UserDto;
 import com.minhdubai.Giftback.domain.dto.WalletDto;
+import com.minhdubai.Giftback.domain.entity.Group;
 import com.minhdubai.Giftback.domain.entity.User;
 import com.minhdubai.Giftback.domain.entity.Wallet;
 import com.minhdubai.Giftback.mapper.Mapper;
@@ -26,15 +29,21 @@ public class UserService {
    private GroupRepository groupRepository;
    private WalletRepository walletRepository;
    private Mapper<User, UserDto> userMapper;
+   private Mapper<Group, GroupDto> groupMapper;
    private Mapper<Wallet, WalletDto> walletMapper;
+   private final PasswordEncoder passwordEncoder;
 
    public ResponseDto findById(Integer userId) {
       User foundedUser = userRepository.findById(userId).orElse(null);
       if (foundedUser != null) {
+         UserDto userDto = userMapper.mapTo(foundedUser);
+         if (foundedUser.getGroup() != null) {
+            userDto.setGroup(groupMapper.mapTo(foundedUser.getGroup()));
+         }
          return ResponseDto.builder()
                .status(200)
                .message("User found")
-               .data(userMapper.mapTo(foundedUser))
+               .data(userDto)
                .build();
       }
       return ResponseDto.builder()
@@ -50,6 +59,7 @@ public class UserService {
 
    public ResponseDto create(UserDto userDto) {
       User user = userMapper.mapFrom(userDto);
+      user.setPassword(passwordEncoder.encode(userDto.getPassword()));
       // Check if the group is not null and is transient
       if (user.getGroup() != null && user.getGroup().getId() == null) {
          // Save the group first if it's a new transient instance
@@ -61,8 +71,7 @@ public class UserService {
          user.setWallet(walletRepository.save(user.getWallet()));
       } else {
          user.setWallet(walletRepository.save(
-            Wallet.builder().balance(BigDecimal.ZERO).build()
-         ));
+               Wallet.builder().balance(BigDecimal.ZERO).build()));
       }
 
       // Save the user first to ensure the wallet can reference it
@@ -115,8 +124,15 @@ public class UserService {
    public ResponseDto getAllUsers() {
       List<User> users = userRepository.findAll();
       List<UserDto> userDtos = users.stream()
-            .map(userMapper::mapTo)
+            .map(user -> {
+               UserDto userDto = userMapper.mapTo(user);
+               if (user.getGroup() != null) {
+                  userDto.setGroup(groupMapper.mapTo(user.getGroup()));
+               }
+               return userDto;
+            })
             .toList();
+
       return ResponseDto.builder()
             .status(200)
             .message("Users retrieved successfully")

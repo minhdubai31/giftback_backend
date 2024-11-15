@@ -2,6 +2,9 @@ package com.minhdubai.Giftback.controller;
 
 import com.minhdubai.Giftback.service.NotificationService;
 import com.minhdubai.Giftback.domain.dto.common.ResponseDto;
+
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +23,7 @@ public class NotificationController {
         return ResponseEntity.ok(result);
     }
 
-    @PutMapping("/{notificationId}")
+    @PutMapping("/{notificationId}/read")
     public ResponseEntity<Boolean> seenNotification(@PathVariable Integer notificationId) {
         boolean result = notificationService.seenNotification(notificationId);
         return ResponseEntity.ok(result);
@@ -39,8 +42,14 @@ public class NotificationController {
     }
 
     @PostMapping("/sendToAll")
-    public ResponseEntity<ResponseDto> sendNotificationToAllUsers(@RequestBody String message) {
-        ResponseDto response = notificationService.sendNotificationToAllUsers(message);
+    public ResponseEntity<ResponseDto> sendNotificationToAllUsers(@RequestBody Map<String, String> data) {
+        ResponseDto response = notificationService.sendNotificationToAllUsers(data.get("message"));
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseDto> deleteNotification(@PathVariable Integer id) {
+        notificationService.deleteNotification(id);
+        return ResponseEntity.ok(null);
     }
 }

@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.minhdubai.Giftback.domain.constant.AuthProvider;
 import com.minhdubai.Giftback.domain.constant.Role;
@@ -26,13 +27,15 @@ public class UserDto {
    private String username;
    private String name;
 
+   @JsonIgnore
+   private String password;
+
    @Builder.Default
    private Role role = Role.USER;
    
    @Builder.Default
    private AuthProvider authProvider = AuthProvider.LOCAL;
 
-   @JsonBackReference
    private GroupDto group;
    
    @JsonManagedReference

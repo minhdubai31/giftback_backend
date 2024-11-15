@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.minhdubai.Giftback.domain.constant.PayoutMethod;
 import com.minhdubai.Giftback.domain.constant.PayoutStatus;
 
 @Getter

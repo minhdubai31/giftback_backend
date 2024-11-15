@@ -12,7 +12,8 @@ import java.util.Set;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Data
 @Builder
@@ -24,12 +25,14 @@ public class GroupDto {
 
     @Builder.Default
     private BigDecimal walletBalance = BigDecimal.ZERO;
-
-    @JsonManagedReference
+    
+    @JsonIgnoreProperties("group")
     private UserDto owner;
 
-    @JsonManagedReference
+    @JsonIgnore
     private Set<UserDto> users;
+
+    private Integer memberCount;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

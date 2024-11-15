@@ -38,4 +38,28 @@ public class GroupController {
         ResponseDto response = groupService.deleteGroup(id);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
+    @PostMapping("/{groupId}/{userId}")
+    public ResponseEntity<ResponseDto> joinGroup(@PathVariable Integer groupId, @PathVariable Integer userId) {
+        ResponseDto response = groupService.joinGroup(userId, groupId);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @GetMapping("/{id}/members")
+    public ResponseEntity<ResponseDto> getGroupMembers(@PathVariable Integer id) {
+        ResponseDto response = groupService.getGroupMembers(id);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDto> getGroupById(@PathVariable Integer id) {
+        ResponseDto response = groupService.getGroupById(id);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @PostMapping("/leave/{userId}")
+    public ResponseEntity<ResponseDto> leaveGroup(@PathVariable Integer userId) {
+        ResponseDto response = groupService.leaveGroup(userId);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }
