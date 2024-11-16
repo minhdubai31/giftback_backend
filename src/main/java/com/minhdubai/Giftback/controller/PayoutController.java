@@ -55,4 +55,10 @@ public class PayoutController {
                 .build();
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ResponseDto> getPayoutByUser(@PathVariable Integer userId) {
+        ResponseDto response = payoutService.getPayoutByUser(userId);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }

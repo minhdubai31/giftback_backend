@@ -164,4 +164,14 @@ public class CashbackService {
                .build();
       }
    }
+
+   public ResponseDto getCashbacksByUser(Integer userId) {
+      List<Cashback> cashbacks = cashbackRepository.findAllByTransactionUserId(userId);
+      List<CashbackDto> dtos = cashbacks.stream().map(cashbackMapper::mapTo).toList();
+      return ResponseDto.builder()
+         .status(200)
+         .message("Cashback retrieved successfully")
+         .data(dtos)
+         .build();
+   }
 }

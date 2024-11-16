@@ -102,4 +102,15 @@ public class PayoutService {
          payoutRepository.save(payout);
       }
    }
+
+   public ResponseDto getPayoutByUser(Integer userId) {
+      List<Payout> payouts = payoutRepository.findAllByUserId(userId);
+      List<PayoutDto> payoutDtos = payouts.stream().map(payoutMapper::mapTo).toList();
+
+      return ResponseDto.builder()
+         .status(200)
+         .message("Payouts retrieved successfully")
+         .data(payoutDtos)
+         .build();
+   }
 }

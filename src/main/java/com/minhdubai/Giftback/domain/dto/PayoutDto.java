@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.minhdubai.Giftback.domain.constant.PayoutMethod;
 import com.minhdubai.Giftback.domain.constant.PayoutStatus;
 
@@ -20,6 +21,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PayoutDto {
     private Integer id;
+
+    @JsonIgnoreProperties({"group", "notifications"})
     private UserDto user;
     private BigDecimal amount;
     private PayoutStatus status;

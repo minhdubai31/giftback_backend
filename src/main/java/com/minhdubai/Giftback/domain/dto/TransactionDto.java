@@ -32,10 +32,4 @@ public class TransactionDto {
     private String productName;
 
     private String reasonReject;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }

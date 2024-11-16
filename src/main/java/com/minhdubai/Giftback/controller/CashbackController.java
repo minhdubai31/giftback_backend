@@ -50,4 +50,10 @@ public class CashbackController {
         ResponseDto response = cashbackService.updateCashbackFromNetwork();
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ResponseDto> getCashbacksByUser(@PathVariable Integer userId) {
+        ResponseDto response = cashbackService.getCashbacksByUser(userId);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }

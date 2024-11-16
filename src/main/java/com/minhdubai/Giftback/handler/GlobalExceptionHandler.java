@@ -18,15 +18,15 @@ public class GlobalExceptionHandler {
    @ExceptionHandler(MethodArgumentNotValidException.class)
    public ResponseEntity<ResponseDto> handleValidationExceptions(MethodArgumentNotValidException ex) {
       List<Map<String, Object>> listErrors = ex.getBindingResult()
-         .getFieldErrors()
-         .stream()
-         .map(x -> {
-            Map<String, Object> error = new HashMap<>();
-            error.put("field", x.getField());
-            error.put("message", x.getDefaultMessage());
-            return error;
-         })
-         .collect(Collectors.toList());
+            .getFieldErrors()
+            .stream()
+            .map(x -> {
+               Map<String, Object> error = new HashMap<>();
+               error.put("field", x.getField());
+               error.put("message", x.getDefaultMessage());
+               return error;
+            })
+            .collect(Collectors.toList());
 
       ResponseDto response = ResponseDto.builder()
             .status(400)
@@ -38,10 +38,14 @@ public class GlobalExceptionHandler {
 
    @ExceptionHandler(Exception.class)
    public ResponseEntity<ResponseDto> handleException(Exception ex) {
+      // Create a safe representation of the exception
+      Map<String, Object> errorDetails = new HashMap<>();
+      errorDetails.put("error", ex.getClass().getSimpleName());
+      errorDetails.put("message", ex.getMessage());
       ResponseDto response = ResponseDto.builder()
             .status(400)
             .message(ex.getMessage())
-            .data(ex)
+            .data(errorDetails)
             .build();
 
       return ResponseEntity.status(response.getStatus()).body(response);

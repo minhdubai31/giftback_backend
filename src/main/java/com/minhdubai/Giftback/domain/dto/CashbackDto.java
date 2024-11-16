@@ -20,10 +20,4 @@ public class CashbackDto {
     private TransactionDto transaction;
     private BigDecimal amount;
     private LocalDateTime earnedAt;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }
